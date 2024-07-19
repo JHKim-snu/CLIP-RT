@@ -42,7 +42,16 @@ conda activate rlds_env
 4. in `clip_rt_example_dataset_builder.py`, modify the following line:
 ```shell
 def _info(self) -> tfds.core.DatasetInfo:
+def _split_generators(self, dl_manager: tfds.download.DownloadManager):
+def _generate_examples(self, path) -> Iterator[Tuple[str, Any]]:
 ```
+5. Then
+```shell
+tfds build --overwrite
+```
+
+You will then get a RLDS format of your own dataset in `~/tensorflow_datasets/<name_of_your_dataset>`
+
 
 In `openvla/prismatic/vla/datasets/rlds/oxe/configs.py`, include:
 
