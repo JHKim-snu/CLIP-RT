@@ -6,6 +6,8 @@ To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
 
 
 ## OpenVLA
+### Construct Environment
+
 Install the following dependencies.
 ```shell
 conda create -n openvla python=3.10
@@ -21,11 +23,13 @@ pip install peft==0.11.1
 ```
 If you have a problem with executing UR5, check the version of math3d. It may not be compatable.
 
+### Inference
 To test the OpenVLA model with a random test image and text, run
 ```shell
 python test.py
 ```
 
+### Finetune with LoRA
 To finetune the openVLA model with your own data, you first need to preprocess your own dataset.
 
 1. Clone https://github.com/kpertsch/rlds_dataset_builder
@@ -33,6 +37,11 @@ To finetune the openVLA model with your own data, you first need to preprocess y
 ```shell
 conda env create -f environment_ubuntu.yml
 conda activate rlds_env
+```
+3. Change `example_dataset` to `clip_rt_example`
+4. in `clip_rt_example_dataset_builder.py`, modify the following line:
+```shell
+def _info(self) -> tfds.core.DatasetInfo:
 ```
 
 In `openvla/prismatic/vla/datasets/rlds/oxe/configs.py`, include:
