@@ -8,13 +8,20 @@ import cv2
 import base64
 import socket
 import numpy as np
-from ur_controller import RobotController
 import time
-import urx
+
+# ROBOT
+# import urx
+# from ur_controller import RobotController
+# rc = RobotController()
+# Grab image input & format prompt
+# capture = rc.camera.get_capture()
+# cv_img = capture.color[:, :, :3]
+# image = cv_img
+
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"
 
-# rc = RobotController()
 
 # Load Processor & VLA
 processor = AutoProcessor.from_pretrained("openvla/openvla-7b", trust_remote_code=True)
@@ -25,11 +32,6 @@ vla = AutoModelForVision2Seq.from_pretrained(
     low_cpu_mem_usage=True,
     trust_remote_code=True,
 ).to("cuda")
-
-# Grab image input & format prompt
-# capture = rc.camera.get_capture()
-# cv_img = capture.color[:, :, :3]
-# image = cv_img
 
 image = Image.open("../RT/azure_test.png")
 
