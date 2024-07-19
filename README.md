@@ -1,6 +1,10 @@
 # CLIP-RT
 A foundation model for vision-language-action 
 
+Clone the original openVLA git repo. 
+To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
+
+
 ## OpenVLA
 Install the following dependencies.
 ```shell
@@ -22,7 +26,39 @@ To test the OpenVLA model with a random test image and text, run
 python test.py
 ```
 
-To finetune the openVLA model with your own data, run
+To finetune the openVLA model with your own data, you first need to preprocess your own dataset.
+
+1. Clone https://github.com/kpertsch/rlds_dataset_builder
+2. Env
+```shell
+conda env create -f environment_ubuntu.yml
+conda activate rlds_env
+```
+
+In `openvla/prismatic/vla/datasets/rlds/oxe/configs.py`, include:
+
+```shell
+  "clip_rt_example": {
+      "image_obs_keys": {"primary": "image", "secondary": None, "wrist": None},
+      "depth_obs_keys": {"primary": None, "secondary": None, "wrist": None},
+      "state_obs_keys": [None, None, None, None, None, None, None, None],
+      "state_encoding": StateEncoding.NONE,
+      "action_encoding": ActionEncoding.EEF_POS,
+  },
+```
+
+Then, in `openvla/prismatic/vla/datasets/rlds/oxe/transforms.py`, include:
+```shell
+def clip_rt_example_dataset_transform():
+...
+```
+and
+```shell
+OXE_STANDARDIZATION_TRANSFORMS = {
+    "clip_rt_example": clip_rt_example_dataset_transform,
+```
+
+Then, run
 ```shell
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/finetune.py \
   --vla_path "openvla/openvla-7b" \
