@@ -14,12 +14,20 @@ conda create -n openvla python=3.10
 pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cu118
 pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cu121
 pip install -r https://raw.githubusercontent.com/openvla/openvla/main/requirements-min.txt
+cd openvla
+pip install -e .
+pip install packaging ninja
+ninja --version; echo $?
+pip install "flash-attn==2.5.5" --no-build-isolation
+
 pip install accelerate
-pip install flash-attn --no-build-isolation
 pip install opencv-python
 pip install math3d
 pip install pyk4a
 pip install peft==0.11.1
+pip install draccus
+python -m pip install rich
+
 ```
 If you have a problem with executing UR5, check the version of math3d. It may not be compatable.
 
@@ -78,19 +86,23 @@ OXE_STANDARDIZATION_TRANSFORMS = {
 
 Then, run
 ```shell
-torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/finetune.py \
+torchrun --standalone --nnodes 1 --nproc-per-node 8 vla-scripts/finetune.py \
   --vla_path "openvla/openvla-7b" \
   --data_root_dir /home/jhkim/tensorflow_datasets \
   --dataset_name clip_rt_example \
   --run_root_dir /home/jhkim/data/clipRT/openvla/vla-scripts/runs \
   --adapter_tmp_dir /home/jhkim/data/clipRT/openvla/vla-scripts/adapter-tmp \
   --lora_rank 32 \
-  --batch_size 4 \
+  --batch_size 8 \
   --grad_accumulation_steps 1 \
   --learning_rate 5e-4 \
   --image_aug False \
-  --wandb_project cliprt \
+  --wandb_project cliprt 
 ```
 ```shell
   --save_steps <NUMBER OF GRADIENT STEPS PER CHECKPOINT SAVE>
 ```
+
+After training:
+unnorm key for my dataset seems not automatically added in config.json.
+Manually copy it from `dataset_statics.json`. You MUST modify `pred_action` in `modeling_prismatic.py`
