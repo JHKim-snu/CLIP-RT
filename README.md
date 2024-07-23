@@ -53,7 +53,8 @@ def _info(self) -> tfds.core.DatasetInfo:
 def _split_generators(self, dl_manager: tfds.download.DownloadManager):
 def _generate_examples(self, path) -> Iterator[Tuple[str, Any]]:
 ```
-5. Then
+Don't forget to edit the name of the python file "<dataset_name>_dataset_builder.py"
+5. Then, execute
 ```shell
 tfds build --overwrite
 ```
@@ -104,4 +105,15 @@ With 4 H100 GPUs 100 steps is enough for training 10 episodes, taking less than 
 
 After training:
 unnorm key for my dataset seems not automatically added in config.json.
-Manually copy it from `dataset_statics.json`. You MUST modify `pred_action` in `modeling_prismatic.py`
+Manually copy it from `dataset_statics.json`. You MUST modify `pred_action` function in `modeling_prismatic.py`, where the unrom_key is used.
+Or you can try modifying `config.json`, by manually inserting the dataset statistics.
+
+
+---
+### List of files that might be useful
+- `openvla/prismatic/vla/datasets/rlds/dataset.py`
+  ```shell
+  def make_dataset_from_rlds
+  ```
+- 
+- 
