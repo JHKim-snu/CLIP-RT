@@ -99,9 +99,8 @@ torchrun --standalone --nnodes 1 --nproc-per-node 8 vla-scripts/finetune.py \
   --image_aug False \
   --wandb_project cliprt 
 ```
-```shell
-  --save_steps <NUMBER OF GRADIENT STEPS PER CHECKPOINT SAVE>
-```
+
+With 4 H100 GPUs 100 steps is enough for training 10 episodes, taking less than 1 min.
 
 After training:
 unnorm key for my dataset seems not automatically added in config.json.
