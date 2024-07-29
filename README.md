@@ -151,8 +151,9 @@ python client_ur_collect.py
 - Robot Server
 ```shell
 conda activate ur
-python client_ur_infer.py
+python client_ur_infer.py --mode safe
 ```
+Set `--mode` to `cont` if you want for the robot to continuously act throughout the task.
 
 - Remote Server (OpenVLA Server)
 
