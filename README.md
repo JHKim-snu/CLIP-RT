@@ -165,12 +165,10 @@ Set `--mode` to `cont` if you want for the robot to continuously act throughout 
 For the safety mode, you must press the key for every action the robot receives. 
 If you press "n", the robot does not take an action and returns to home pose.
 
-- Model Server
-```shell
-python test.py --mode full
-```
-
 
 - Remote Server (OpenVLA Server)
-
+```shell
+conda activate openvla
+python test.py --mode full
+```
 
