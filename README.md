@@ -6,7 +6,6 @@ To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
 
 
 ## OpenVLA
----
 ### Construct Environment
 
 Install the following dependencies.
@@ -124,4 +123,27 @@ python test.py
 
 ## Collect Training Data
 ### UR5
+This is the code for collecting robotic action data with human lanugage.
+< Robot Server >
+```shell
+conda activate ur
+```
+
+Test the camera
+```shell
+python kinect_get_image.py
+```
+
+Test the robot
+```shell
+python ur_controller.py
+```
+You can check on the current joint pose by adding the argument `--getpose`.
+
+To collect data, communicate with the remote server.
+For the client (robot server), 
+```shell
+python client_ur.py
+```
+
 
