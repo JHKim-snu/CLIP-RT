@@ -154,6 +154,8 @@ conda activate ur
 python client_ur_infer.py --mode safe
 ```
 Set `--mode` to `cont` if you want for the robot to continuously act throughout the task.
+For the safety mode, you must press the key for every action the robot receives. 
+If you press "n", the robot does not take an action and returns to home pose.
 
 - Remote Server (OpenVLA Server)
 
