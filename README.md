@@ -6,6 +6,7 @@ To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
 
 
 ## OpenVLA
+---
 ### Construct Environment
 
 Install the following dependencies.
@@ -123,3 +124,4 @@ python test.py
 
 ## Collect Training Data
 ### UR5
+
