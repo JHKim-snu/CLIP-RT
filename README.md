@@ -124,7 +124,7 @@ python test.py
 ## Collect Training Data
 ### UR5
 This is the code for collecting robotic action data with human lanugage.
-< Robot Server >
+- Robot Server
 ```shell
 conda activate ur
 ```
@@ -148,11 +148,12 @@ python client_ur_collect.py
 
 ## Finally Testing on Your Robot
 ### UR5
-<Robot Server>
+- Robot Server
 ```shell
 conda activate ur
 python client_ur_infer.py
 ```
 
+- Remote Server (OpenVLA Server)
 
 
