@@ -143,7 +143,16 @@ You can check on the current joint pose by adding the argument `--getpose`.
 To collect data, communicate with the remote server.
 For the client (robot server), 
 ```shell
-python client_ur.py
+python client_ur_collect.py
 ```
+
+## Finally Testing on Your Robot
+### UR5
+<Robot Server>
+```shell
+conda activate ur
+python client_ur_infer.py
+```
+
 
 
