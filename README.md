@@ -5,6 +5,14 @@ Clone the original openVLA git repo.
 To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
 
 
+
+## Table of Contents
+* [OpenVLA](#OpenVLA)
+* [Collect Training Data](#Collect-Training-Data)
+* [Finally Testing on Your Robot](#Finally-Testing-on-Your-Robot)
+
+
+
 ## OpenVLA
 ### Construct Environment
 
