@@ -15,6 +15,7 @@ import socket
 import base64
 import argparse
 import datetime
+import json
 
 parser = argparse.ArgumentParser()
 
@@ -83,6 +84,7 @@ elif args.mode == "full":
     # robot.act(action, ...)
 
     image_root_path = "./raw_data/images/test/"
+    json_root_path = "./raw_data/steps/test/"
     HOST = '114.110.129.13'
     PORT = 9998
 
@@ -94,10 +96,15 @@ elif args.mode == "full":
     print(f'Connected by: {addr}')
 
     image_cnt = 0
+    instruction = ""
+    
     while True:
         try:
-            
-            instruction = input("Instruction: ")
+            data = {}
+            cont = input("Press "t" for new task, otherwise, press any key to continue")
+            if cont == 't':
+                instruction = input("Instruction: ")
+                
             # Receive CV2 Image
             length = int(cli_sock.recv(65).decode('utf-8'), 2)
             buf = b''
@@ -128,6 +135,13 @@ elif args.mode == "full":
             print('\n')
             cli_sock.send(action_info.encode())
 
+            data['image_path'] = save_image_path
+            data['instruction'] = instruction
+            data['action'] = action
+            
+            json_path = os.path.join(json_root_path,'{}_{}_{}_{}_{}_{}.json'.format(dt.year,dt.month,dt.day,dt.hour,dt.minute,dt.second))
+            with open(json_path, 'w') as f:
+                json.dump(data,f)
             ###############AAAAAAAAAAAAAAAAAA################
             #############################
 
