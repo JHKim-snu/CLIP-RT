@@ -108,7 +108,10 @@ unnorm key for my dataset seems not automatically added in config.json.
 Manually copy it from `dataset_statics.json`. You MUST modify `pred_action` function in `modeling_prismatic.py`, where the unrom_key is used.
 Or you can try modifying `config.json`, by manually inserting the dataset statistics.
 
-
+Test your model with:
+```shell
+python test.py
+```
 ---
 ### List of files that might be useful
 - `openvla/prismatic/vla/datasets/rlds/dataset.py`
@@ -117,3 +120,6 @@ Or you can try modifying `config.json`, by manually inserting the dataset statis
   ```
 - 
 - 
+
+## Collect Training Data
+### UR5
