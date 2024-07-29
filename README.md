@@ -110,7 +110,7 @@ Or you can try modifying `config.json`, by manually inserting the dataset statis
 
 Test your model with:
 ```shell
-python test.py
+python test.py --mode serveronly
 ```
 ---
 ### List of files that might be useful
@@ -156,6 +156,12 @@ python client_ur_infer.py --mode safe
 Set `--mode` to `cont` if you want for the robot to continuously act throughout the task.
 For the safety mode, you must press the key for every action the robot receives. 
 If you press "n", the robot does not take an action and returns to home pose.
+
+- Model Server
+```shell
+python test.py --mode full
+```
+
 
 - Remote Server (OpenVLA Server)
 
