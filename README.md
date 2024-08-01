@@ -55,7 +55,9 @@ conda env create -f environment_ubuntu.yml
 conda activate rlds_env
 ```
 3. Change `example_dataset` to `clip_rt_example`
-4. in `clip_rt_example_dataset_builder.py`, modify the following line:
+4. Make a data directory `data/raw`
+5. Convert the raw data to `.npy` via `raw_to_npy.ipynb`
+6. in `clip_rt_example_dataset_builder.py`, modify the following line: (For myself: just copy and paste the clip_rt_example) BUT, change the name of the class!!!!
 ```shell
 def _info(self) -> tfds.core.DatasetInfo:
 def _split_generators(self, dl_manager: tfds.download.DownloadManager):
@@ -95,10 +97,11 @@ OXE_STANDARDIZATION_TRANSFORMS = {
 
 Then, run
 ```shell
-torchrun --standalone --nnodes 1 --nproc-per-node 8 vla-scripts/finetune.py \
+conda activate openvla
+torchrun --standalone --nnodes 1 --nproc-per-node 2 vla-scripts/finetune.py \
   --vla_path "openvla/openvla-7b" \
   --data_root_dir /home/jhkim/tensorflow_datasets \
-  --dataset_name clip_rt_example \
+  --dataset_name clip_rt_point \
   --run_root_dir /home/jhkim/data/clipRT/openvla/vla-scripts/runs \
   --adapter_tmp_dir /home/jhkim/data/clipRT/openvla/vla-scripts/adapter-tmp \
   --lora_rank 32 \
