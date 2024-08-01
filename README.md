@@ -116,7 +116,7 @@ With 4 H100 GPUs 100 steps is enough for training 10 episodes, taking less than 
 
 After training:
 unnorm key for my dataset seems not automatically added in config.json.
-Manually copy it from `dataset_statics.json`. You MUST modify `pred_action` function in `modeling_prismatic.py`, where the unrom_key is used.
+Manually copy it from `dataset_statics.json`. You MUST modify `pred_action` function in `openvla/prismatic/extern/hf/modeling_prismatic.py`, where the unrom_key is used. (WHAT TO DO? just copy the path of the `data_statistics.json` to `modeling_prismatic.py`.
 Or you can try modifying `config.json`, by manually inserting the dataset statistics.
 
 Test your model with:
@@ -129,8 +129,6 @@ python test.py --mode serveronly
   ```shell
   def make_dataset_from_rlds
   ```
-- 
-- 
 
 ## Collect Training Data
 Don't forget to open the port for socket communication.
