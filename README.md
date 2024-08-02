@@ -131,14 +131,6 @@ python test.py --mode serveronly
   ```
 
 ## Collect Training Data
-Don't forget to open the port for socket communication.
-```shell
-sudo ufw enable
-sudo ufw allow 9999
-sudo ufw allow from 147.47.200.171
-sudo ufw status verbose
-```
-
 ### UR5
 This is the code for collecting robotic action data with human lanugage.
 - Robot Server
