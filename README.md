@@ -97,7 +97,6 @@ OXE_STANDARDIZATION_TRANSFORMS = {
 
 Then, run
 ```shell
-conda activate openvla
 torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/finetune.py \
   --vla_path "openvla/openvla-7b" \
   --data_root_dir /home/jhkim/tensorflow_datasets \
