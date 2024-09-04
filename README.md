@@ -56,8 +56,10 @@ conda activate rlds_env
 ```
 3. Change `example_dataset` to `clip_rt_example`
 4. Make a data directory `data/raw`
-5. Convert the raw data to `.npy` via `raw_to_npy.ipynb`
-6. in `clip_rt_example_dataset_builder.py`, modify the following line: (For myself: just copy and paste the clip_rt_example) BUT, change the name of the class!!!!
+5. Change the data file name via `raw_to_npy.ipynb`
+6. Clean the dataset (For example, we deleted the undesired actions such as "done" and "raise arm up")
+7. Convert the raw data to `.npy` via `raw_to_npy.ipynb`
+8. In `clip_rt_example_dataset_builder.py`, modify the following line: (For myself: just copy and paste the clip_rt_example) BUT, change the name of the class!!!!
 ```shell
 def _info(self) -> tfds.core.DatasetInfo:
 def _split_generators(self, dl_manager: tfds.download.DownloadManager):
