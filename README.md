@@ -99,10 +99,10 @@ OXE_STANDARDIZATION_TRANSFORMS = {
 
 Then, run
 ```shell
-torchrun --standalone --nnodes 1 --nproc-per-node 1 vla-scripts/finetune.py \
+torchrun --standalone --nnodes 1 --nproc-per-node 2 vla-scripts/finetune.py \
   --vla_path "openvla/openvla-7b" \
   --data_root_dir /home/jhkim/tensorflow_datasets \
-  --dataset_name clip_rt_known \
+  --dataset_name clip_rt_known_augmented \
   --run_root_dir /home/jhkim/data/clipRT/openvla/vla-scripts/runs \
   --adapter_tmp_dir /home/jhkim/data/clipRT/openvla/vla-scripts/adapter-tmp \
   --lora_rank 32 \
