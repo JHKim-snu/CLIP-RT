@@ -24,6 +24,8 @@ class RobotEvaluator:
 
         # Save metrics
         self.save_metrics(json_file_path, l1_result, tf_result, accuracy_result)
+        
+        return l1_result, tf_result, accuracy_result
     
     def unitize_action(self, action): # unitize
         # Define threshold
@@ -56,9 +58,9 @@ class RobotEvaluator:
 
         # Determine if the actions match
         result = True if l1_dist == 0 else False
-        print(f"L1 Distance: {l1_dist}, Result: {result}")
+        # print(f"L1 Distance: {l1_dist}, Result: {result}")
 
-        return {"l1_distance": l1_dist, "match": result}
+        return result # {"l1_distance": l1_dist, "match": result}
 
     def tf_metric(self, data, predicted_action):
         """
@@ -99,10 +101,10 @@ class RobotEvaluator:
             result = result1 or result2
 
             # Print the results for debugging
-            print(f"result1: {result1}, result2: {result2}")
-            print(f"TF Metric: {result}")
+            # print(f"result1: {result1}, result2: {result2}")
+            # print(f"TF Metric: {result}")
             
-            return {"tf_metric": result}
+            return result # {"tf_metric": result}
         
         else:  # now_action이 모두 0일 때
             # 이전 액션이 현재 액션과 동일한지 확인
@@ -111,9 +113,9 @@ class RobotEvaluator:
             
             # 동일한 액션이라면 False 처리 (오답으로 간주)
             if is_same_action:
-                return {"tf_metric": False}
+                return False # {"tf_metric": False}
             else:
-                return {"tf_metric": True}
+                return True # {"tf_metric": True}
 
 
 
@@ -145,7 +147,7 @@ class RobotEvaluator:
         gripper_io = (now_action[-1] == predicted_action[-1])
 
         # Combine all accuracy results
-        print(f"XYZ Accuracy: {xyz_tf:.2f}%, \nRPYG Accuracy: {rpyg_tf:.2f}%, \nGripper Status Accuracy: {gripper_io}%")
+        # print(f"XYZ Accuracy: {xyz_tf:.2f}%, \nRPYG Accuracy: {rpyg_tf:.2f}%, \nGripper Status Accuracy: {gripper_io}%")
         
         return {
             "XYZ Accuracy": xyz_tf, 
@@ -187,13 +189,16 @@ class RobotEvaluator:
             except IOError as e:
                 print(f"Error saving metrics for {json_file_path}: {e}")
 
-# Example usage with saving to the desired directory
-# output_directory_path = ".//to_eval"  # Output directory for saved metrics
-# evaluator = RobotEvaluator(output_directory_path)
-evaluator = RobotEvaluator(None)
 
-predicted_action = [0.0, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]  # Predicted action vector
-json_file_path = ".//preprocess/data_0/task_0/2024_8_1_14_15_50.json"  # JSON file path
+if __name__ == "__main__":
+    
+    # Example usage with saving to the desired directory
+    # output_directory_path = ".//to_eval"  # Output directory for saved metrics
+    # evaluator = RobotEvaluator(output_directory_path)
+    evaluator = RobotEvaluator(None)
 
-# Perform the metric evaluation and save the results
-evaluator.evaluate(predicted_action, json_file_path)
+    predicted_action = [0.0, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0]  # Predicted action vector
+    json_file_path = "./data_evaluation/known/data_1/task_0/2024_8_1_14_15_50.json"  # JSON file path
+
+    # Perform the metric evaluation and save the results
+    evaluator.evaluate(predicted_action, json_file_path)
