@@ -1,5 +1,18 @@
-# CLIP-RT
-A foundation model for vision-language-action 
+<h1>CLIP-RT</h1>
+  
+**[Gi-Cheon Kang][3]<sup>\*</sup>, &nbsp; [Junghyun Kim][4]<sup>\*</sup>, &nbsp; [Kyuhwan Shim][5], &nbsp; [Jun Ki Lee][6], &nbsp; [Byoung-Tak Zhang][1]** <br>
+
+**[3rd Workshop on Language and Robot Learning @ CoRL2024][2]**
+</div>
+
+<h3 align="center">
+<a href="https://arxiv.org/abs/2411.00508">arXiv</a> | <a href="https://clip-rt.github.io/">Project Page (TBD)</a> 
+</h3>
+
+This repository provides detailed instructions on:
+
+1. Conducting experiments with [OpenVLA][0]
+2. Collecting data using natural language supervision.
 
 Clone the original openVLA git repo. 
 To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
@@ -174,3 +187,10 @@ conda activate openvla
 python test.py --mode full
 ```
 
+[0]: https://openvla.github.io/
+[1]: https://bi.snu.ac.kr/~btzhang/
+[2]: https://sites.google.com/view/langrob-corl24/home?authuser=0
+[3]: https://gicheonkang.com
+[4]: https://jhkim-snu.github.io/
+[5]: https://underthelights.github.io/
+[6]: https://junkilee.github.io/
