@@ -1,3 +1,5 @@
+## CLIP-RT
+
 from transformers import AutoModelForVision2Seq, AutoProcessor
 from PIL import Image
 
