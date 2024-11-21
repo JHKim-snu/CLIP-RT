@@ -11,7 +11,9 @@
 <a href="https://arxiv.org/abs/2411.00508">arXiv</a> | <a href="https://clip-rt.github.io/">Project Page</a> 
 </h3>
 
-<img src="readme_figure/cliprt_overview.gif" width="100%" align="middle"><br><br>
+### 
+<img src="readme_figure/cliprt_overview.gif" width="100%" align="middle"><br><br>
+
 
 This repository provides detailed instructions on:
 
@@ -32,38 +34,25 @@ Main CLIP-RT model can be found on [this repo][7].
 
 ## OpenVLA
 
-Clone the original openVLA git repo. 
-To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
-
 ### Construct Environment
+
+Clone the original [OpenVLA git repo][9]. 
 
 Install the following dependencies.
 ```shell
 conda create -n openvla python=3.10
-pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cu118
-pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cu121
-pip install -r https://raw.githubusercontent.com/openvla/openvla/main/requirements-min.txt
+pip install -r requirements.txt
 cd openvla
 pip install -e .
-pip install packaging ninja
-ninja --version; echo $?
-pip install "flash-attn==2.5.5" --no-build-isolation
-
-pip install accelerate
-pip install opencv-python
-pip install math3d
-pip install pyk4a
-pip install peft==0.11.1
-pip install draccus
-python -m pip install rich
-
 ```
-If you have a problem with executing UR5, check the version of math3d. It may not be compatable.
+
+To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
+
 
 ### Inference
 To test the OpenVLA model with a random test image and text, run
 ```shell
-python test.py
+python test.py --mode single --model openvla
 ```
 
 ### Finetune with LoRA
@@ -195,6 +184,9 @@ conda activate openvla
 python test.py --mode full
 ```
 
+If you have a problem with executing UR5, check the version of math3d. It may not be compatable.
+
+
 [0]: https://openvla.github.io/
 [1]: https://bi.snu.ac.kr/~btzhang/
 [2]: https://sites.google.com/view/langrob-corl24/home?authuser=0
@@ -204,3 +196,4 @@ python test.py --mode full
 [6]: https://junkilee.github.io/
 [7]: https://github.com/gicheonkang/clip-rt
 [8]: https://www.universal-robots.com/products/ur5-robot/
+[9]: https://github.com/openvla/openvla
