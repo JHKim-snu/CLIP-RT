@@ -11,9 +11,7 @@
 <a href="https://arxiv.org/abs/2411.00508">arXiv</a> | <a href="https://clip-rt.github.io/">Project Page</a> 
 </h3>
 
-<video src="cliprt_overview.mp4" width="100%" controls>
-Your browser does not support the video tag.
-</video>
+<video src="cliprt_overview.mp4" width="100%" controls></video>
 
 This repository provides detailed instructions on:
 
