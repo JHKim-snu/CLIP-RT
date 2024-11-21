@@ -1,3 +1,5 @@
+<div align="center">
+  
 <h1>CLIP-RT</h1>
   
 **[Gi-Cheon Kang][3]<sup>\*</sup>, &nbsp; [Junghyun Kim][4]<sup>\*</sup>, &nbsp; [Kyuhwan Shim][5], &nbsp; [Jun Ki Lee][6], &nbsp; [Byoung-Tak Zhang][1]** <br>
@@ -6,16 +8,20 @@
 </div>
 
 <h3 align="center">
-<a href="https://arxiv.org/abs/2411.00508">arXiv</a> | <a href="https://clip-rt.github.io/">Project Page (TBD)</a> 
+<a href="https://arxiv.org/abs/2411.00508">arXiv</a> | <a href="https://clip-rt.github.io/">Project Page</a> 
 </h3>
+
+<video src="cliprt_overview.mp4" width="100%" controls>
+Your browser does not support the video tag.
+</video>
 
 This repository provides detailed instructions on:
 
-1. Conducting experiments with [OpenVLA][0]
-2. Collecting data using natural language supervision.
+1. Training [OpenVLA][0]
+2. Collecting data using natural language supervision
+3. Conducting experiments with [UR5][8]
 
-Clone the original openVLA git repo. 
-To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
+Main CLIP-RT model can be found on [this repo][7].
 
 
 
@@ -27,6 +33,10 @@ To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
 
 
 ## OpenVLA
+
+Clone the original openVLA git repo. 
+To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
+
 ### Construct Environment
 
 Install the following dependencies.
@@ -194,3 +204,5 @@ python test.py --mode full
 [4]: https://jhkim-snu.github.io/
 [5]: https://underthelights.github.io/
 [6]: https://junkilee.github.io/
+[7]: https://github.com/gicheonkang/clip-rt
+[8]: https://www.universal-robots.com/products/ur5-robot/
