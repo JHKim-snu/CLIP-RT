@@ -166,6 +166,27 @@ For the client (robot server),
 python client_ur_collect.py
 ```
 
+
+### Training Set
+
+The `common.zip` and `novel.zip` files each contain datasets for multiple tasks (9 common tasks and 10 novel tasks).
+These datasets were collected using human natural language supervisions. For each task, we collected 10 episodes.
+
+Each episode consists of a series of PNG-JSON pairs:
+
+1. PNG: An image representing the current scene.
+2. JSON: Metadata including the initial human instruction, natural language supervision, low-level actions, and other relevant details.
+
+
+
+| Name  | Content | Examples | Size | Link |
+| --- | --- |--- | --- |--- |
+| `common.zip`  | Data for common tasks collected through natural language supervision | 911 | 670 MBytes | [Download](https://drive.google.com/drive/folders/12fHThp8IC1fzmbyx850zSkcuFXUQsy9V?usp=sharing)|
+| `common_augmented.zip`  | Augmented data of common tasks | 9,841 | 1.8 GBytes | [Download](https://drive.google.com/drive/folders/1QpsvN-y-MJtq6r9tqoubWFPXwl6iuskA?usp=sharing)|
+| `novel.zip`  | Data for novel tasks collected through natural language supervision | 1,276 | 1.2 GBytes | [Download]([https://drive.google.com/](https://drive.google.com/drive/folders/12fHThp8IC1fzmbyx850zSkcuFXUQsy9V?usp=sharing))|
+| `novel_augmented.zip`  | Augmented data of novel tasks | 11,578 | 2.0 GBytes | [Download](https://drive.google.com/drive/folders/1-7K7Nv0n6ax5lVWEYWYQjrdzpsEjhRdp?usp=sharing)|
+
+
 ## Finally Testing on Your Robot
 ### UR5
 - Robot Server
