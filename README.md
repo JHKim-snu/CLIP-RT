@@ -167,7 +167,7 @@ python client_ur_collect.py
 ```
 
 
-### Training Set
+### CLIP-RT Dataset
 
 The `common.zip` and `novel.zip` files each contain datasets for multiple tasks (9 common tasks and 10 novel tasks).
 These datasets were collected using human natural language supervisions. For each task, we collected 10 episodes.
