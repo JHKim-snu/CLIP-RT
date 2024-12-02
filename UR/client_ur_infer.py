@@ -28,7 +28,7 @@ def main():
     parser.add_argument("--mode", dest="mode", action="store", default="safe")
     args = parser.parse_args()
     
-    robot = urx.Robot("192.168.1.117")  # Network IP Address
+    robot = urx.Robot("")  # Network IP Address
     time.sleep(0.2)
     print("roobt successfully connected")
     cli_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

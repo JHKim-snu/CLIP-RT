@@ -20,7 +20,7 @@ class RobotController:
 
 class Arm:
     def __init__(self):
-        self.robot = urx.Robot("192.168.1.117")
+        self.robot = urx.Robot("")
         self.robot.set_tcp((0, 0, 0, 0, 0, 0))
         # self.robot.set_payload(0.5, (0,0,0))
         time.sleep(0.2)

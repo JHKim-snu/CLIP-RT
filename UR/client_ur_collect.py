@@ -12,8 +12,8 @@ import os
 
 
 # socket
-HOST = "147.47.200.171"
-PORT = 9997
+HOST = ""
+PORT = 
 
 # Bounding Area (m) Info for the robot safety
 max_x = 0.27
@@ -45,7 +45,7 @@ def main():
     else:
         EPISODE_NUM = max([int(k[-1]) for k in existing_epi]) + 1
 
-    robot = urx.Robot("192.168.1.117")  # Network IP Address
+    robot = urx.Robot("")  # Network IP Address
     time.sleep(0.2)
     print("roobt successfully connected")
 
