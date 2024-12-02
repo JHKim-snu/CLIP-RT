@@ -202,10 +202,10 @@ Each episode consists of a series of PNG-JSON pairs:
 
 | Name  | Content | Examples | Size | Link |
 | --- | --- |--- | --- |--- |
-| `common.zip`  | Data for common tasks collected through natural language supervision | 911 | 670 MBytes | [Download](https://drive.google.com/drive/folders/12fHThp8IC1fzmbyx850zSkcuFXUQsy9V?usp=sharing)|
-| `common_augmented.zip`  | Augmented data of common tasks | 9,841 | 1.8 GBytes | [Download](https://drive.google.com/drive/folders/1QpsvN-y-MJtq6r9tqoubWFPXwl6iuskA?usp=sharing)|
+| `common.zip`  | Data for common tasks collected through natural language supervision | 911 | 670 MBytes | [Download](https://drive.google.com/drive/folders/12fHThp8IC1fzmbyx850zSkcuFXUQsy9V?usp=sharing)|
+| `common_augmented.zip`  | Augmented data of common tasks | 9,841 | 1.8 GBytes | [Download](https://drive.google.com/drive/folders/1QpsvN-y-MJtq6r9tqoubWFPXwl6iuskA?usp=sharing)|
 | `novel.zip`  | Data for novel tasks collected through natural language supervision | 1,276 | 1.2 GBytes | [Download](https://drive.google.com/drive/folders/12fHThp8IC1fzmbyx850zSkcuFXUQsy9V?usp=sharing)|
-| `novel_augmented.zip`  | Augmented data of novel tasks | 11,578 | 2.0 GBytes | [Download](https://drive.google.com/drive/folders/1-7K7Nv0n6ax5lVWEYWYQjrdzpsEjhRdp?usp=sharing)|
+| `novel_augmented.zip`  |  Augmented data of novel tasks | 11,578 | 2.0 GBytes | [Download](https://drive.google.com/drive/folders/1-7K7Nv0n6ax5lVWEYWYQjrdzpsEjhRdp?usp=sharing)|
 
 
 ## Finally Testing on Your Robot
