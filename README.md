@@ -187,6 +187,9 @@ python client_ur_collect.py
 ### Remote Server
 Comming Soon!
 
+### Stochastic Trajectory Diversification
+Comming Soon!
+
 
 ## CLIP-RT Dataset
 
