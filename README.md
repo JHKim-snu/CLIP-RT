@@ -34,9 +34,61 @@ Main CLIP-RT model can be found on [this repo][7].
 
 ## OpenVLA
 
-### Construct Environment
+### Prepare Dataset
+To finetune the openVLA model with your own data, you first need to convert your own dataset to RLDS Dataset format.
 
-Clone the original [OpenVLA git repo][9]. 
+1. Clone https://github.com/kpertsch/rlds_dataset_builder
+2. Environment
+```shell
+conda env create -f environment_ubuntu.yml
+conda activate rlds_env
+```
+3. Change directory name `example_dataset` to `[your_dataset_name]`
+4. Make a data directory `[your_dataset_name]/data/raw`
+
+We expect data to be uploaded to the following directory structure:
+
+    ├── raw         
+    │   ├── task_0       
+    │   │   ├── episode_0
+    │   │   │   ├── x.png      
+    │   │   │   ├── x.json      
+    │   │   │   └── ...     
+    │   │   ├── episode_1   
+    │   │   │   ├── y.png   
+    │   │   │   └── ...      
+    └── 
+
+Each elements in `.json`file consists of the initial instruction of the task, natural language supervision, low-level action vector (7-d and 8-d), file name of the image as shown below.
+
+<pre>
+{"prev_eef_pose": [0.4867851071573382, 0.11065651089581363, 0.43149384252823314, 3.1369514868261072, 0.006225836816466727, 0.0016994614054684717], "prev_joint": [3.1415085792541504, -1.5707486311541956, 1.570798397064209, 4.71236515045166, -1.5706971327411097, -1.5709307829486292], "eef_pose": [0.48678753690778354, 0.210619672338698, 0.43147651408980553, 3.136830345592423, 0.006070714275545524, 0.0016729409424801845], "joint": [3.3396871089935303, -1.4953535238849085, 1.4921374320983887, 4.716606140136719, -1.570972744618551, -1.3726237455951136], "instruction": "open the cabinet", "supervision": "move arm to the left", "action": [0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0], "image_path": "2024_9_11_13_38_56.png", "openx_action": [0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 1.0]}
+</pre>
+
+
+5. We provide functions to preprocess the raw data. Extracting 7-d action from 8-d action for example. `data_utils/preprocess_raw.py`
+6. Convert the raw data to `.npy` format via `data_utils/convert_to_RLDS.py`
+7. In `[your_dataset_name]_dataset_builder.py`, modify the following lines according to your dataset:
+```shell
+def _info(self) -> tfds.core.DatasetInfo:
+def _split_generators(self, dl_manager: tfds.download.DownloadManager):
+def _generate_examples(self, path) -> Iterator[Tuple[str, Any]]:
+```
+Modify the name of the class as following rule:
+`my_data` to `class MyData():`
+
+8. Finally, execute
+```shell
+tfds build --overwrite
+```
+
+You will then get a RLDS format of your own dataset in `~/tensorflow_datasets/<name_of_your_dataset>`
+
+
+
+### Finetune with LoRA
+
+Clone the [OpenVLA git repo][9]. 
 
 Install the following dependencies.
 ```shell
@@ -46,48 +98,17 @@ cd openvla
 pip install -e .
 ```
 
-To convert your own dataset to RLDS Dataset format (for fine-tuning openVLA)
-
-
-### Inference
 To test the OpenVLA model with a random test image and text, run
 ```shell
 python test.py --mode single --model openvla
 ```
 
-### Finetune with LoRA
-To finetune the openVLA model with your own data, you first need to preprocess your own dataset.
-
-1. Clone https://github.com/kpertsch/rlds_dataset_builder
-2. Env
-```shell
-conda env create -f environment_ubuntu.yml
-conda activate rlds_env
-```
-3. Change `example_dataset` to `clip_rt_example`
-4. Make a data directory `data/raw`
-5. Change the data file name via `raw_to_npy.ipynb`
-6. Clean the dataset (For example, we deleted the undesired actions such as "done" and "raise arm up")
-7. Convert the raw data to `.npy` via `raw_to_npy.ipynb`
-8. In `clip_rt_example_dataset_builder.py`, modify the following line: (For myself: just copy and paste the clip_rt_example) BUT, change the name of the class!!!!
-```shell
-def _info(self) -> tfds.core.DatasetInfo:
-def _split_generators(self, dl_manager: tfds.download.DownloadManager):
-def _generate_examples(self, path) -> Iterator[Tuple[str, Any]]:
-```
-Don't forget to edit the name of the python file "<dataset_name>_dataset_builder.py"
-5. Then, execute
-```shell
-tfds build --overwrite
-```
-
-You will then get a RLDS format of your own dataset in `~/tensorflow_datasets/<name_of_your_dataset>`
-
+To fine-tune the model:
 
 In `openvla/prismatic/vla/datasets/rlds/oxe/configs.py`, include:
 
 ```shell
-  "clip_rt_example": {
+  "[name_of_your_dataset]": {
       "image_obs_keys": {"primary": "image", "secondary": None, "wrist": None},
       "depth_obs_keys": {"primary": None, "secondary": None, "wrist": None},
       "state_obs_keys": [None, None, None, None, None, None, None, None],
@@ -98,53 +119,50 @@ In `openvla/prismatic/vla/datasets/rlds/oxe/configs.py`, include:
 
 Then, in `openvla/prismatic/vla/datasets/rlds/oxe/transforms.py`, include:
 ```shell
-def clip_rt_example_dataset_transform():
+def [name_of_your_dataset]_dataset_transform():
 ...
 ```
 and
 ```shell
 OXE_STANDARDIZATION_TRANSFORMS = {
-    "clip_rt_example": clip_rt_example_dataset_transform,
+    "[name_of_your_dataset]": [name_of_your_dataset]_dataset_transform,
 ```
 
 Then, run
 ```shell
 torchrun --standalone --nnodes 1 --nproc-per-node 2 vla-scripts/finetune.py \
   --vla_path "openvla/openvla-7b" \
-  --data_root_dir /home/jhkim/tensorflow_datasets \
-  --dataset_name clip_rt_expert \
-  --run_root_dir /home/jhkim/data/clipRT/openvla/vla-scripts/runs \
-  --adapter_tmp_dir /home/jhkim/data/clipRT/openvla/vla-scripts/adapter-tmp \
+  --data_root_dir ~/tensorflow_datasets \
+  --dataset_name [name_of_your_dataset] \
+  --run_root_dir /openvla/vla-scripts/runs \
+  --adapter_tmp_dir /openvla/vla-scripts/adapter-tmp \
   --lora_rank 32 \
   --batch_size 8 \
   --grad_accumulation_steps 1 \
   --learning_rate 5e-4 \
   --image_aug False \
-  --wandb_project cliprt 
+  --wandb_project [name] 
 ```
 
-With 4 H100 GPUs 100 steps is enough for training 10 episodes, taking less than 1 min.
+With 4 H100 GPUs 100 steps is enough for training 10 episodes, taking only couple of min.
 
-After training:
-unnorm key for my dataset seems not automatically added in config.json.
-Manually copy it from `dataset_statics.json`. You MUST modify `pred_action` function in `openvla/prismatic/extern/hf/modeling_prismatic.py`, where the unrom_key is used. (WHAT TO DO? just copy the path of the `data_statistics.json` to `modeling_prismatic.py`.
-Or you can try modifying `config.json`, by manually inserting the dataset statistics.
 
-Test your model with:
+### Test Your Model
+
+Unnorm key seems not automatically added in config.json.
+Manually copy it from `dataset_statics.json` under `vla-scripts/runs`. 
+You MUST modify `pred_action` function in `openvla/prismatic/extern/hf/modeling_prismatic.py`, where the unrom_key is used OR you can try modifying `config.json`, by manually inserting the dataset statistics.
+
+Now, you're ready to test your model with:
 ```shell
 python test.py --mode serveronly
 ```
 ---
-### List of files that might be useful
-- `openvla/prismatic/vla/datasets/rlds/dataset.py`
-  ```shell
-  def make_dataset_from_rlds
-  ```
+
 
 ## Collect Training Data
-### UR5
-This is the code for collecting robotic action data with human lanugage.
-- Robot Server
+### Robot Server (Client)
+This is the code for collecting robotic action data with UR5.
 ```shell
 conda activate ur
 ```
@@ -166,8 +184,11 @@ For the client (robot server),
 python client_ur_collect.py
 ```
 
+### Remote Server
+Comming Soon!
 
-### CLIP-RT Dataset
+
+## CLIP-RT Dataset
 
 The `common.zip` and `novel.zip` files each contain datasets for multiple tasks (9 common tasks and 10 novel tasks).
 These datasets were collected using human natural language supervisions. For each task, we collected 10 episodes.
@@ -199,14 +220,16 @@ For the safety mode, you must press the key for every action the robot receives.
 If you press "n", the robot does not take an action and returns to home pose.
 
 
-- Remote Server (OpenVLA Server)
+- Remote Server
+
+(OpenVLA)
 ```shell
 conda activate openvla
 python test.py --mode full
+
 ```
-
-If you have a problem with executing UR5, check the version of math3d. It may not be compatable.
-
+(CLIP-RT)
+Check out [this repo][7].
 
 [0]: https://openvla.github.io/
 [1]: https://bi.snu.ac.kr/~btzhang/
